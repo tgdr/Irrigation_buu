@@ -178,9 +178,14 @@ public class frag_Envir extends Fragment {
 					soilH.setMaxValue(config.maxSoilHumidity);
 					mAdp.notifyDataSetChanged();
 				}
-				js += Float.parseFloat(formateRate(String.valueOf(nextDouble(0.001,0.03))));
-				js = Float.parseFloat(formateRate(String.valueOf(js)));
-				tvjs.setText("i小智已累计帮您节水"+js+"m³");
+
+				try {
+					js += Float.parseFloat(formateRate(String.valueOf(nextDouble(0.001,0.03))));
+					js = Float.parseFloat(formateRate(String.valueOf(js)));
+					tvjs.setText("i花酱已累计帮您节水"+js+"m³");
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
 
 			}
 		});

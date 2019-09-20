@@ -3,12 +3,15 @@ package lty.buu.irrigation_buu.activity;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,14 +21,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.sql.Time;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import lty.buu.irrigation_buu.IrrigationApplication;
 import lty.buu.irrigation_buu.R;
 import lty.buu.irrigation_buu.fragment.frag_Envir;
 import lty.buu.irrigation_buu.fragment.frag_irr_knowledge;
+import lty.buu.irrigation_buu.fragment.frag_moren;
+import lty.buu.irrigation_buu.fragment.frag_pumpContr;
 import lty.buu.irrigation_buu.fragment.frag_realtimesensor;
 import lty.buu.irrigation_buu.http.BaseRequest;
+import lty.buu.irrigation_buu.http.request.GetRealSensorRequest;
 import lty.buu.irrigation_buu.http.request.Getyz;
+import lty.buu.irrigation_buu.http.request.SetPumpRequest;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,10 +47,14 @@ public class MainActivity extends AppCompatActivity
     FragmentTransaction trans;
     Toolbar toolbar;
     Getyz yzrequest;
+
+    SharedPreferences spf;
+    Boolean isinitok=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        spf=getSharedPreferences("mauto",MODE_PRIVATE);
         manager = getSupportFragmentManager();
         app = (IrrigationApplication) getApplication();
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,9 +72,25 @@ public class MainActivity extends AppCompatActivity
                 app.getSensorConfig().minAirHumidity= (int) yzrequest.getYz_hum();
                 app.getSensorConfig().maxSoilHumidity= (int) yzrequest.getYz_soil1();
                 app.getSensorConfig().minSoilHumidity= (int) yzrequest.getYz_soil();
+                isinitok=true;
+                trans =  manager.beginTransaction();
+                trans.setCustomAnimations(R.anim.scale_in,R.anim.scale_out);
+                trans.replace(R.id.mycontent,new frag_moren());
+                trans.commit();
             }
         });
         app.requestOneThread(yzrequest);
+
+
+
+
+
+
+
+
+
+
+
       //  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -77,7 +110,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -114,25 +149,33 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_showdata) {
             // Handle the camera action
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            trans =  manager.beginTransaction();
+            trans=manager.beginTransaction();
             trans.setCustomAnimations(R.anim.scale_in,R.anim.scale_out);
-            trans.replace(R.id.mycontent,new frag_Envir());
 
+            trans.replace(R.id.mycontent,new frag_Envir());
             trans.commit();
         } else if (id == R.id.nav_showirr) {
             startActivity(new Intent(MainActivity.this,RealTimeDataActivity.class));
 
            // overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
         } else if (id == R.id.nav_autoctrl) {
-
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            trans=manager.beginTransaction();
+            trans.setCustomAnimations(R.anim.my_card_flip_left_in,
+                    R.anim.my_card_flip_left_out, R.anim.my_card_flip_right_in,
+                    R.anim.my_card_flip_right_out);
+            trans.replace(R.id.mycontent,new frag_pumpContr());
+            trans.commit();
         } else if (id == R.id.nav_irrknowledge) {
-            trans =  manager.beginTransaction();
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            trans=manager.beginTransaction();
             trans.setCustomAnimations(R.anim.my_card_flip_left_in,
                     R.anim.my_card_flip_left_out, R.anim.my_card_flip_right_in,
                     R.anim.my_card_flip_right_out);

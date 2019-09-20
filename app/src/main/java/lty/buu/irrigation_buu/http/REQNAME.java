@@ -9,6 +9,7 @@ public class REQNAME {
     public static String RandomSensor = "RandomSensor.do";
     public static String GETYZ = "getyz.do";
     public static String GetRealTimeSensorValues = "GetRealTimeSensorValues.do";
+
    /*
     public static String
     public static String

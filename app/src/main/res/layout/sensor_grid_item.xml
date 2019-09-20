@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/sensor_item_layout"
-    android:background="@color/card_bg_green">
+    >
    <RelativeLayout 
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
@@ -18,10 +18,11 @@
            android:text="N/A"
            android:id="@+id/sensor_name_text1"
            />
-       <TextView 
-            android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:id="@+id/status_text" android:textSize="40sp"
+       <ImageView
+            android:layout_width="70dp"
+           android:layout_height="70dp"
+           android:id="@+id/status_image"
+           android:src="@drawable/nomal"
            android:layout_alignParentRight="true"
            />
    </RelativeLayout>

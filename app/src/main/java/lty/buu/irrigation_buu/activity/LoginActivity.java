@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -396,6 +397,7 @@ UserLoginRequest userLoginRequest;
 
 
             if (success) {
+                Log.e("联网成功！！！","联网成功！！！");
                 userLoginRequest = new UserLoginRequest(app);
                 userLoginRequest.setUsername(mEmail);
                 userLoginRequest.setPassword(mPassword);

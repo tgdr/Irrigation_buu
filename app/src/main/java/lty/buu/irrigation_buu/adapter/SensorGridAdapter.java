@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,7 +27,7 @@ public class SensorGridAdapter extends ArrayAdapter<SensorBean>
 	{
 		LinearLayout bgLayout;//背景布局
 		TextView nameTextView; //显示传感器名称
-        TextView stautsTextView;//显示传感器状态
+        ImageView stautsImageView;//显示传感器状态
         TextView setValeuTextView;//显示传感器的阀值
         TextView valueTextView;//显示传感器的值
 	}
@@ -73,7 +73,7 @@ public class SensorGridAdapter extends ArrayAdapter<SensorBean>
 				//界面初始化
 				holder.bgLayout= (LinearLayout)convertView.findViewById(R.id.sensor_item_layout);
 				holder.nameTextView= (TextView)convertView.findViewById(R.id.sensor_name_text1);
-				holder.stautsTextView=(TextView) convertView.findViewById(R.id.status_text);
+				holder.stautsImageView= (ImageView) convertView.findViewById(R.id.status_image);
 				holder.setValeuTextView= (TextView)convertView.findViewById(R.id.set_value_text);
 				holder.valueTextView= (TextView)convertView.findViewById(R.id.sensor_value_text);
 				convertView.setTag(holder);
@@ -115,12 +115,11 @@ public class SensorGridAdapter extends ArrayAdapter<SensorBean>
 				}
 				if(isWarning){
 					//如果需要告警，背景则显示红色
-					holder.bgLayout.setBackgroundResource(R.color.card_bg_red);
-					holder.stautsTextView.setText("异常");
+					holder.stautsImageView.setImageResource(R.drawable.nomal);
+
 				} else {
 					//不必告警则显示绿色
-					holder.bgLayout.setBackgroundResource(R.color.card_bg_green);
-					holder.stautsTextView.setText("正常");
+					holder.stautsImageView.setImageResource(R.drawable.jinggao);
 				}
 		}
 		catch (Exception e)

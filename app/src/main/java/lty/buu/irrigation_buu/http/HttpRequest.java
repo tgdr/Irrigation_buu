@@ -25,7 +25,7 @@ public class HttpRequest {
 
     public static void request(String action, JSONObject jso, Response.Listener<JSONObject> ok, Response.ErrorListener er) {
 
-        String urls = "http://" + AppConfig.ip + ":" + AppConfig.port + "/" +action ;
+        String urls = "http://" + AppConfig.ip + "/Irrigation/" +action ;
         if (ok == null) {
             ok = new Response.Listener<JSONObject>() {
                 @Override

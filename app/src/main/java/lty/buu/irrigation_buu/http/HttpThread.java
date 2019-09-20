@@ -83,8 +83,8 @@ public class HttpThread extends Thread {
                     String ipstr= AppConfig.ip;
                     String action = baseRequest.getAction();
                     String body = baseRequest.getBody();
-                    int port = AppConfig.port;
-                    String url = "http://"+ipstr+":"+port+"/"+action;
+//                    int port = AppConfig.port;
+                    String url = "http://"+ipstr+"/Irrigation/"+action;
                     Log.e("ipip",url);
                     SendRequest sendRequest = new SendRequest(url,body);
                   int result =   sendRequest.send();
